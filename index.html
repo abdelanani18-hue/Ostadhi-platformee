@@ -2,14 +2,18 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>أستاذي | المنصة الجزائرية للدروس الخصوصية</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
+
+  <!-- شريط التنقل الزجاجي -->
   <header class="navbar container">
-    <div class="logo">🎓 أستاذي</div>
+    <div class="logo"><i class="fas fa-graduation-cap"></i> أستاذي</div>
     <nav class="nav-links">
       <a href="index.html">الرئيسية</a>
       <a href="search.html">الأساتذة</a>
@@ -17,39 +21,97 @@
       <a href="register.html" class="btn">سجّل مجاناً</a>
     </nav>
   </header>
-  <section class="hero">
-    <h1>جد أستاذك <span style="color:var(--gold);">المثالي</span></h1>
-    <p>منصة تربط التلاميذ بأفضل الأساتذة الخصوصيين في 48 ولاية جزائرية</p>
+
+  <!-- قسم البطل -->
+  <section class="hero" data-aos="fade-up">
+    <h1>جد أستاذك <span style="color: var(--gold);">المثالي</span></h1>
+    <p>منصة متكاملة تربط التلاميذ بأفضل الأساتذة الخصوصيين في جميع ولايات الجزائر</p>
     <div class="search-bar">
-      <input type="text" id="heroSearch" placeholder="مادة أو ولاية...">
-      <button onclick="location.href='search.html?q='+document.getElementById('heroSearch').value">بحث</button>
+      <input type="text" placeholder="رياضيات، فيزياء، لغة عربية...">
+      <button><i class="fas fa-search"></i> بحث</button>
     </div>
   </section>
+
   <div class="container">
-    <div class="stats">
-      <div class="stat-box"><div class="num">+500</div><div class="lbl">أستاذ موثوق</div></div>
-      <div class="stat-box"><div class="num">+3000</div><div class="lbl">تلميذ ناجح</div></div>
-      <div class="stat-box"><div class="num">48</div><div class="lbl">ولاية</div></div>
+
+    <!-- الإحصائيات -->
+    <div class="stats" data-aos="zoom-in">
+      <div class="stat-box">
+        <div class="num">+500</div>
+        <div class="lbl">أستاذ موثوق</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">+3000</div>
+        <div class="lbl">تلميذ ناجح</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">48</div>
+        <div class="lbl">ولاية جزائرية</div>
+      </div>
     </div>
-    <h2 style="text-align:center;margin-bottom:24px;">🎯 أساتذة مميزون</h2>
-    <div class="cards" id="featuredTeachers"></div>
+
+    <!-- الأساتذة المميزون -->
+    <h2 class="section-title" data-aos="fade-up">🎯 أساتذة مميزون بالقرب منك</h2>
+    <div class="cards" id="featuredTeachers" data-aos="fade-up" data-aos-delay="100"></div>
+
   </div>
-  <footer style="background:var(--primary);color:#ccc;text-align:center;padding:30px;margin-top:60px">
-    © 2025 أستاذي. جميع الحقوق محفوظة.
+
+  <!-- التذييل -->
+  <footer class="footer">
+    <p>© 2025 أستاذي. جميع الحقوق محفوظة. | <a href="#" style="color: var(--gold);">سياسة الخصوصية</a></p>
   </footer>
+
+  <!-- بيانات وهمية مؤقتة (حتى يتم ربط Firebase) -->
+  <script>
+    // بيانات أساتذة تجريبية تظهر فوراً
+    const dummyTeachers = [
+      { name: "أ. خالد بوشنافة", subjects: ["رياضيات", "فيزياء"], wilaya: "الجزائر", price: 1200, rating: 4.9 },
+      { name: "أ. سارة عابد", subjects: ["لغة عربية", "فلسفة"], wilaya: "وهران", price: 1000, rating: 4.8 },
+      { name: "أ. ياسين مراد", subjects: ["إنجليزية", "فرنسية"], wilaya: "قسنطينة", price: 900, rating: 4.7 },
+      { name: "أ. فاطمة زروقي", subjects: ["علوم طبيعية"], wilaya: "عنابة", price: 850, rating: 4.9 },
+      { name: "أ. محمد الأمين", subjects: ["كيمياء"], wilaya: "سطيف", price: 1100, rating: 4.6 },
+      { name: "أ. نادية لعبيدي", subjects: ["إعلام آلي"], wilaya: "تيزي وزو", price: 950, rating: 4.8 }
+    ];
+
+    const grid = document.getElementById('featuredTeachers');
+    grid.innerHTML = dummyTeachers.map(t => `
+      <div class="card">
+        <div class="card-img">👨‍🏫</div>
+        <div class="card-body">
+          <h3>${t.name}</h3>
+          <div class="subject">${t.subjects.join(' · ')}</div>
+          <div class="stars">${'★'.repeat(Math.floor(t.rating))} ${t.rating}</div>
+          <div class="price">${t.price} دج/حصة</div>
+          <div class="card-footer">
+            <span style="color: var(--text-soft); font-size: 0.85rem;">${t.wilaya}</span>
+            <a href="#" class="btn-sm"><i class="fas fa-calendar-check"></i> احجز</a>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  </script>
+
+  <!-- تأثيرات الحركة -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 700, easing: 'ease-out-back', once: true });
+  </script>
+
+  <!-- Firebase اختياري - يعمل فقط عند وجود بيانات حقيقية -->
+  <!--
   <script type="module">
     import { db } from './js/firebase-config.js';
     import { collection, getDocs, query, limit } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-    async function loadFeatured() {
+    async function loadReal() {
       const q = query(collection(db, "professors"), limit(6));
       const snap = await getDocs(q);
-      const grid = document.getElementById('featuredTeachers');
       snap.forEach(doc => {
-        const d = doc.data();
-        grid.innerHTML += `<div class="card"><div class="card-img">👨‍🏫</div><div class="card-body"><h3>${d.name||'أستاذ'}</h3><div class="subject">${(d.subjects||[]).join(' · ')}</div><div class="stars">⭐ ${d.rating||5.0}</div><div class="price">${d.price||0} دج/حصة</div><div class="card-footer"><a href="teacher.html?id=${doc.id}" class="btn-sm">عرض</a></div></div></div>`;
+        // يمكن دمجها مع البيانات الوهمية لاحقاً
       });
     }
-    loadFeatured();
+    // loadReal();
   </script>
+  -->
+
 </body>
 </html>
