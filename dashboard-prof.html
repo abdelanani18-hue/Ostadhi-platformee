@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>لوحة الأستاذ | أستاذي</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar container"><div class="logo">📋 أستاذي</div><button class="btn-o" id="logoutBtn">خروج</button></header>
+  <div class="dashboard">
+    <h2 id="welcome">مرحباً ...</h2>
+    <div class="dash-stats">
+      <div class="dash-stat"><div class="num" id="earnings">0</div><div class="lbl">دج مكتسبة</div></div>
+      <div class="dash-stat"><div class="num" id="sessions">0</div><div class="lbl">حصص مكتملة</div></div>
+      <div class="dash-stat"><div class="num" id="pending">0</div><div class="lbl">قيد الانتظار</div></div>
+    </div>
+    <h3>الحجوزات</h3>
+    <div class="booking-list" id="bookings"></div>
+  </div>
+  <script type="module">
+    import { watchAuth, logout } from './js/auth.js';
+    document.getElementById('logoutBtn').onclick = logout;
+    watchAuth((user, data) => {
+      if (!user || data.role !== 'prof') { location.href = 'login.html'; return; }
+      document.getElementById('welcome').textContent = 'مرحباً ' + data.name;
+      document.getElementById('earnings').textContent = '12,500';
+      document.getElementById('sessions').textContent = '8';
+      document.getElementById('pending').textContent = '2';
+      document.getElementById('bookings').innerHTML = `<div class="booking-item"><span>حجز #1234</span><span>1,200 دج</span><span>مؤكد</span></div><div class="booking-item"><span>حجز #5678</span><span>1,000 دج</span><span>قيد الانتظار</span></div>`;
+    });
+  </script>
+</body>
+</html>
