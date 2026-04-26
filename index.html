@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>أستاذي | المنصة الجزائرية للدروس الخصوصية</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="navbar container">
+    <div class="logo">🎓 أستاذي</div>
+    <nav class="nav-links">
+      <a href="index.html">الرئيسية</a>
+      <a href="search.html">الأساتذة</a>
+      <a href="login.html" class="btn-o">دخول</a>
+      <a href="register.html" class="btn">سجّل مجاناً</a>
+    </nav>
+  </header>
+  <section class="hero">
+    <h1>جد أستاذك <span style="color:var(--gold);">المثالي</span></h1>
+    <p>منصة تربط التلاميذ بأفضل الأساتذة الخصوصيين في 48 ولاية جزائرية</p>
+    <div class="search-bar">
+      <input type="text" id="heroSearch" placeholder="مادة أو ولاية...">
+      <button onclick="location.href='search.html?q='+document.getElementById('heroSearch').value">بحث</button>
+    </div>
+  </section>
+  <div class="container">
+    <div class="stats">
+      <div class="stat-box"><div class="num">+500</div><div class="lbl">أستاذ موثوق</div></div>
+      <div class="stat-box"><div class="num">+3000</div><div class="lbl">تلميذ ناجح</div></div>
+      <div class="stat-box"><div class="num">48</div><div class="lbl">ولاية</div></div>
+    </div>
+    <h2 style="text-align:center;margin-bottom:24px;">🎯 أساتذة مميزون</h2>
+    <div class="cards" id="featuredTeachers"></div>
+  </div>
+  <footer style="background:var(--primary);color:#ccc;text-align:center;padding:30px;margin-top:60px">
+    © 2025 أستاذي. جميع الحقوق محفوظة.
+  </footer>
+  <script type="module">
+    import { db } from './js/firebase-config.js';
+    import { collection, getDocs, query, limit } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    async function loadFeatured() {
+      const q = query(collection(db, "professors"), limit(6));
+      const snap = await getDocs(q);
+      const grid = document.getElementById('featuredTeachers');
+      snap.forEach(doc => {
+        const d = doc.data();
+        grid.innerHTML += `<div class="card"><div class="card-img">👨‍🏫</div><div class="card-body"><h3>${d.name||'أستاذ'}</h3><div class="subject">${(d.subjects||[]).join(' · ')}</div><div class="stars">⭐ ${d.rating||5.0}</div><div class="price">${d.price||0} دج/حصة</div><div class="card-footer"><a href="teacher.html?id=${doc.id}" class="btn-sm">عرض</a></div></div></div>`;
+      });
+    }
+    loadFeatured();
+  </script>
+</body>
+</html>
