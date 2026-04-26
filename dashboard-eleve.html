@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>لوحة التلميذ | أستاذي</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar container"><div class="logo">📚 أستاذي</div><button class="btn-o" id="logoutBtn">خروج</button></header>
+  <div class="dashboard">
+    <h2 id="welcome">مرحباً ...</h2>
+    <div class="dash-stats">
+      <div class="dash-stat"><div class="num">4</div><div class="lbl">حصص محجوزة</div></div>
+      <div class="dash-stat"><div class="num">2</div><div class="lbl">أساتذة متابعين</div></div>
+    </div>
+  </div>
+  <script type="module">
+    import { watchAuth, logout } from './js/auth.js';
+    document.getElementById('logoutBtn').onclick = logout;
+    watchAuth((user, data) => {
+      if (!user || data.role !== 'eleve') { location.href = 'login.html'; return; }
+      document.getElementById('welcome').textContent = 'مرحباً ' + data.name;
+    });
+  </script>
+</body>
+</html>
