@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>تسجيل | أستاذي</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="auth-page">
+  <div class="auth-box">
+    <h2>📝 إنشاء حساب</h2>
+    <input type="text" id="name" placeholder="الاسم الكامل">
+    <input type="email" id="email" placeholder="البريد الإلكتروني">
+    <input type="password" id="password" placeholder="كلمة المرور">
+    <select id="role"><option value="eleve">تلميذ</option><option value="prof">أستاذ</option></select>
+    <select id="wilaya">
+      <option>الجزائر</option><option>وهران</option><option>قسنطينة</option><option>عنابة</option>
+    </select>
+    <button onclick="handleRegister()">إنشاء الحساب</button>
+    <a href="login.html">لديك حساب؟ دخول</a>
+    <div id="error" style="color:red;text-align:center"></div>
+  </div>
+  <script type="module">
+    import { register } from './js/auth.js';
+    window.handleRegister = async () => {
+      try {
+        await register(
+          document.getElementById('email').value,
+          document.getElementById('password').value,
+          document.getElementById('role').value,
+          { name: document.getElementById('name').value, wilaya: document.getElementById('wilaya').value }
+        );
+      } catch(e) { document.getElementById('error').textContent = e.message; }
+    };
+  </script>
+</body>
+</html>
