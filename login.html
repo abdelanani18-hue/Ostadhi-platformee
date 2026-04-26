@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>دخول | أستاذي</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="auth-page">
+  <div class="auth-box">
+    <h2>🔑 تسجيل الدخول</h2>
+    <input type="email" id="email" placeholder="البريد الإلكتروني">
+    <input type="password" id="password" placeholder="كلمة المرور">
+    <button onclick="handleLogin()">دخول</button>
+    <a href="register.html">ليس لديك حساب؟ سجّل الآن</a>
+    <div id="error" style="color:red;text-align:center"></div>
+  </div>
+  <script type="module">
+    import { login } from './js/auth.js';
+    window.handleLogin = async () => {
+      try {
+        await login(document.getElementById('email').value, document.getElementById('password').value);
+      } catch(e) { document.getElementById('error').textContent = e.message; }
+    };
+  </script>
+</body>
+</html>
